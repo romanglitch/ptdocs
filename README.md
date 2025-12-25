@@ -1,2 +1,2 @@
-# ptdocs
-PTdocs - plants app
+# PTdocs
+Plants app

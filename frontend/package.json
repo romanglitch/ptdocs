@@ -6,7 +6,9 @@
     "dev": "next dev --turbopack -p 3001",
     "build": "next build",
     "start": "next start -p 3001",
-    "lint": "eslint --fix"
+    "lint": "eslint --fix",
+    "docker:build": "docker build -t ptdocs-frontend .",
+    "docker:run": "docker run -p 3001:3001 ptdocs-frontend"
   },
   "dependencies": {
     "@editorjs/editorjs": "^2.31.0",
