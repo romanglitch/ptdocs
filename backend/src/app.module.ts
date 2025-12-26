@@ -45,7 +45,7 @@ import { Doc } from "./entities/doc.entity";
                 password: configService.get('DB_PASSWORD'),
                 database: configService.get('DB_DATABASE'),
                 entities: [__dirname + '/**/*.entity{.ts,.js}'],
-                synchronize: configService.get('NODE_ENV') === 'development',
+                synchronize: true, // False for production
                 logging: true,
             }),
             inject: [ConfigService],
