@@ -21,6 +21,8 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
+    volumes:
+      - uploads_data:/app/uploads
     container_name: ptdocs_backend
     environment:
       DB_HOST: database
@@ -53,4 +55,5 @@ services:
     restart: unless-stopped
 
 volumes:
-  postgres_data:
+  - postgres_data:
+  - uploads_data:
