@@ -3,7 +3,7 @@ FROM node:22-alpine AS builder
 WORKDIR /app
 
 COPY package*.json ./
-RUN npm ci
+RUN npm install
 
 COPY . .
 RUN npm run build
@@ -17,7 +17,7 @@ WORKDIR /app
 RUN npm install pm2 -g
 
 COPY package*.json ./
-RUN npm ci
+RUN npm install
 
 COPY --from=builder /app/dist ./dist
 
