@@ -1,0 +1,19 @@
+{
+  "name": "ptdocs",
+  "version": "1.0.0",
+  "description": "Plants app",
+  "homepage": "https://github.com/romanglitch/ptdocs#readme",
+  "bugs": {
+    "url": "https://github.com/romanglitch/ptdocs/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/romanglitch/ptdocs.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "scripts": {
+    "docker:build": "docker compose up --build -d",
+    "docker:dev": "docker compose -f ./docker-compose.dev.yml up -d"
+  }
+}
