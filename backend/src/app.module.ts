@@ -3,7 +3,6 @@ import {TypeOrmModule} from '@nestjs/typeorm';
 
 import {ConfigModule, ConfigService} from "@nestjs/config";
 
-// Контроллеры
 import { CategoryController } from './controllers/category.controller';
 import { PlantController } from './controllers/plant.controller';
 import { WeekController } from './controllers/week.controller';
@@ -12,7 +11,6 @@ import { TagController } from './controllers/tag.controller';
 import { WeekNameController } from './controllers/weekname.controller';
 import { DocController} from "./controllers/doc.controller";
 
-// Сервисы
 import { CategoryService } from './services/category.service';
 import { PlantService } from './services/plant.service';
 import { WeekService } from './services/week.service';
@@ -21,7 +19,6 @@ import { TagService } from './services/tag.service';
 import { WeekNameService } from './services/weekname.service';
 import { DocService } from './services/doc.service';
 
-// Сущности
 import { Category } from './entities/category.entity';
 import { Plant } from './entities/plant.entity';
 import { Week } from './entities/week.entity';

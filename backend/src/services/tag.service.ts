@@ -6,7 +6,6 @@ import { CreateTagDto } from '../dto/create-tag.dto';
 import path from "path";
 import sharp from "sharp";
 import fs from "fs/promises";
-import {Day} from "../entities/day.entity";
 
 @Injectable()
 export class TagService {
@@ -26,31 +25,26 @@ export class TagService {
         try {
             const originalPath = file.path; // 'uploads/tags/randomname.jpg'
 
-            // 1. Формируем новое имя файла (заменяем .jpg/.png на .webp)
             const baseFilename = path.basename(
                 originalPath,
                 path.extname(originalPath),
             );
             const newWebPPath = path.join(file.destination, `${baseFilename}.webp`);
 
-            // 2. Обработка с помощью sharp
             await sharp(originalPath)
                 .resize(64)
-                .webp({ quality: 80 }) // Сжатие и конвертация в WebP с качеством 80
+                .webp({ quality: 80 })
                 .toFile(newWebPPath);
 
-            // 3. Удаляем оригинальный файл (.jpg/.png)
             await fs.unlink(originalPath);
 
-            // 4. Возвращаем URL для нового .webp файла
             return `/uploads/tags/${path.basename(newWebPPath)}`;
 
         } catch (error) {
-            // Если что-то пошло не так, удаляем оригинал, чтобы не мусорить
             try {
                 await fs.unlink(file.path);
             } catch (e) {
-                // Игнорируем ошибку, если файл уже удален
+                //
             }
             throw new InternalServerErrorException(
                 `Ошибка обработки файла ${file.originalname}: ${error.message}`,
@@ -70,15 +64,12 @@ export class TagService {
             await fs.unlink(filePath);
 
         } catch (error) {
-            // Игнорируем ошибку 'файл не найден' (ENOENT)
             if (error.code !== 'ENOENT') {
                 console.error(`Ошибка при удалении старого файла ${fileUrl}:`, error);
-                // Можно проигнорировать, чтобы не блокировать загрузку нового фото
             }
         }
     }
 
-    // ✅ ОБНОВЛЕННЫЙ МЕТОД: updateStagePhotos
     async updateTagIcon(id: number, files) {
         const tag = await this.tagRepository.findOneBy({ id });
         if (!tag) {
@@ -88,8 +79,6 @@ export class TagService {
         try {
             if (files) {
                 await this.deleteIconFromDiskByUrl(tag.iconUrl);
-
-                // 2. Загрузить и обработать новый файл
                 tag.iconUrl = await this.processImageToWebP(files.icon);
             }
         } catch (error) {
@@ -114,10 +103,8 @@ export class TagService {
             return tag;
         }
 
-        // 1. Удаляем файл с диска, используя новый helper
         await this.deleteIconFromDiskByUrl(currentUrl);
 
-        // 2. Очищаем URL в базе данных
         (tag.iconUrl as string | null) = null;
 
         return this.tagRepository.save(tag);

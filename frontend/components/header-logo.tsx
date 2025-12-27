@@ -11,6 +11,7 @@ export const HeaderLogo = () => {
 		<NextLink className="flex justify-start items-center gap-1" href="/">
 			<Logo/>
 			<p className="font-bold text-inherit ml-2">{siteConfig.name}</p>
+			{process.env.NODE_ENV === "development" && <span className="text-xs">[DEV]</span>}
 		</NextLink>
 	);
 };

@@ -9,7 +9,7 @@ import {
     Patch,
     UseInterceptors,
     UploadedFiles,
-    HttpCode, HttpStatus, BadRequestException
+    HttpCode, HttpStatus
 } from '@nestjs/common';
 import { TagService } from '../services/tag.service';
 import { CreateTagDto } from '../dto/create-tag.dto';
@@ -64,7 +64,6 @@ export class TagController {
     async deletePhoto(
         @Param('id') id: number
     ) {
-        // Вызываем метод сервиса
         await this.tagService.deleteTagIcon(id);
     }
 

@@ -1,4 +1,3 @@
-// src/controllers/day.controller.ts
 import {
     Controller,
     Get,
@@ -29,7 +28,6 @@ export class DayController {
         @Body() createDayDto: CreateDayDto,
         @Query('daysCount') daysCount?: string
     ) {
-        // Если указан параметр daysCount, создаем несколько дней
         if (daysCount) {
             const count = parseInt(daysCount, 10);
             if (isNaN(count) || count < 1 || count > 31) {
@@ -44,7 +42,6 @@ export class DayController {
             return this.dayService.createMultiple(createMultipleDaysDto);
         }
 
-        // Иначе создаем один день
         return this.dayService.create(createDayDto);
     }
 
@@ -97,7 +94,7 @@ export class DayController {
     @HttpCode(HttpStatus.NO_CONTENT)
     async deletePhoto(
         @Param('id') id: number,
-        @Param('stage') stage: string, // Получаем номер стадии как строку
+        @Param('stage') stage: string,
     ) {
         const stageNum = parseInt(stage, 10);
 
@@ -105,7 +102,6 @@ export class DayController {
             throw new BadRequestException('Stage parameter must be 1, 2, or 3.');
         }
 
-        // Вызываем метод сервиса
         await this.dayService.deleteStagePhoto(id, stageNum as 1 | 2 | 3);
     }
 

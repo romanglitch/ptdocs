@@ -4,15 +4,12 @@ import { Repository } from 'typeorm';
 import { Category } from '../entities/category.entity';
 import {Plant} from "../entities/plant.entity";
 import { CreateCategoryDto } from '../dto/create-category.dto';
-import {Tag} from "../entities/tag.entity";
 
 @Injectable()
 export class CategoryService {
     constructor(
         @InjectRepository(Category)
-        private categoryRepository: Repository<Category>,
-        @InjectRepository(Plant)
-        private plantRepository: Repository<Plant>,
+        private categoryRepository: Repository<Category>
     ) {}
 
     async create(createCategoryDto: CreateCategoryDto): Promise<Category> {
