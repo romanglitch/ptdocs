@@ -9,10 +9,8 @@ import {
     Patch,
     UseInterceptors,
     UploadedFiles,
-    HttpCode, HttpStatus, BadRequestException
+    HttpCode, HttpStatus
 } from '@nestjs/common';
-import { TagService } from '../services/tag.service';
-import { CreateTagDto } from '../dto/create-tag.dto';
 import {FileFieldsInterceptor} from "@nestjs/platform-express";
 import {diskStorage} from "multer";
 import {DocService} from "../services/doc.service";

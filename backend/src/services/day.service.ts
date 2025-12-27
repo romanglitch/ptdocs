@@ -11,7 +11,6 @@ import sharp from 'sharp';
 import path from 'path';
 import fs from 'fs/promises';
 
-// Интерфейс для удобства
 interface StagePhotoFiles {
     stage1?: Express.Multer.File;
     stage2?: Express.Multer.File;
@@ -26,9 +25,7 @@ export class DayService {
         @InjectRepository(Tag)
         private tagRepository: Repository<Tag>,
         @InjectRepository(Week)
-        private weekRepository: Repository<Week>,
-        @InjectRepository(Plant)
-        private plantRepository: Repository<Plant>
+        private weekRepository: Repository<Week>
     ) {}
 
     async create(createDayDto: CreateDayDto): Promise<Day> {
@@ -56,7 +53,6 @@ export class DayService {
     async createMultiple(createMultipleDaysDto: CreateMultipleDaysDto): Promise<Day[]> {
         const { daysCount, tagIds, ...baseDayData } = createMultipleDaysDto;
 
-        // Проверяем существование недели
         const week = await this.weekRepository.findOne({
             where: { id: baseDayData.weekId },
             relations: ['days'],
@@ -65,7 +61,6 @@ export class DayService {
             throw new NotFoundException(`Неделя с ID ${baseDayData.weekId} не найдена`);
         }
 
-        // Получаем теги если они указаны
         let tags: Tag[] = [];
         if (tagIds && tagIds.length > 0) {
             tags = await this.tagRepository.find({
@@ -73,7 +68,6 @@ export class DayService {
             });
         }
 
-        // Создаем массив дней
         const daysToCreate: Day[] = [];
         for (let i = 0; i < daysCount; i++) {
             const dayData = {
@@ -95,7 +89,6 @@ export class DayService {
             daysToCreate.push(day);
         }
 
-        // Сохраняем все дни одной транзакцией
         return this.dayRepository.save(daysToCreate);
     }
 
@@ -105,32 +98,27 @@ export class DayService {
         try {
             const originalPath = file.path; // 'uploads/days/randomname.jpg'
 
-            // 1. Формируем новое имя файла (заменяем .jpg/.png на .webp)
             const baseFilename = path.basename(
                 originalPath,
                 path.extname(originalPath),
             );
             const newWebPPath = path.join(file.destination, `${baseFilename}.webp`);
 
-            // 2. Обработка с помощью sharp
             await sharp(originalPath)
                 .rotate()
                 .resize(1920)
-                .webp({ quality: 80 }) // Сжатие и конвертация в WebP с качеством 80
+                .webp({ quality: 80 })
                 .toFile(newWebPPath);
 
-            // 3. Удаляем оригинальный файл (.jpg/.png)
             await fs.unlink(originalPath);
 
-            // 4. Возвращаем URL для нового .webp файла
             return `/uploads/days/${path.basename(newWebPPath)}`;
 
         } catch (error) {
-            // Если что-то пошло не так, удаляем оригинал, чтобы не мусорить
             try {
                 await fs.unlink(file.path);
             } catch (e) {
-                // Игнорируем ошибку, если файл уже удален
+                //
             }
             throw new InternalServerErrorException(
                 `Ошибка обработки файла ${file.originalname}: ${error.message}`,
@@ -142,7 +130,7 @@ export class DayService {
         if (!fileUrl) return;
 
         try {
-            // fileUrl = /uploads/filename.webp
+            // fileUrl = /uploads/days/filename.webp
             const filename = path.basename(fileUrl);
             const projectRoot = path.resolve(process.cwd());
             const filePath = path.join(projectRoot, 'uploads/days', filename);
@@ -150,15 +138,12 @@ export class DayService {
             await fs.unlink(filePath);
 
         } catch (error) {
-            // Игнорируем ошибку 'файл не найден' (ENOENT)
             if (error.code !== 'ENOENT') {
                 console.error(`Ошибка при удалении старого файла ${fileUrl}:`, error);
-                // Можно проигнорировать, чтобы не блокировать загрузку нового фото
             }
         }
     }
 
-    // ✅ ОБНОВЛЕННЫЙ МЕТОД: updateStagePhotos
     async updateStagePhotos(id: number, files: StagePhotoFiles) {
         const day = await this.dayRepository.findOneBy({ id });
         if (!day) {
@@ -166,30 +151,18 @@ export class DayService {
         }
 
         try {
-            // --- Обработка Stage 1 ---
             if (files.stage1) {
-                // 1. УДАЛИТЬ старый файл, если он есть
                 await this.deleteFileFromDiskByUrl(day.stage1PhotoUrl);
-
-                // 2. Загрузить и обработать новый файл
                 day.stage1PhotoUrl = await this.processImageToWebP(files.stage1);
             }
 
-            // --- Обработка Stage 2 ---
             if (files.stage2) {
-                // 1. УДАЛИТЬ старый файл, если он есть
                 await this.deleteFileFromDiskByUrl(day.stage2PhotoUrl);
-
-                // 2. Загрузить и обработать новый файл
                 day.stage2PhotoUrl = await this.processImageToWebP(files.stage2);
             }
 
-            // --- Обработка Stage 3 ---
             if (files.stage3) {
-                // 1. УДАЛИТЬ старый файл, если он есть
                 await this.deleteFileFromDiskByUrl(day.stage3PhotoUrl);
-
-                // 2. Загрузить и обработать новый файл
                 day.stage3PhotoUrl = await this.processImageToWebP(files.stage3);
             }
         } catch (error) {
@@ -201,7 +174,6 @@ export class DayService {
         return this.dayRepository.save(day);
     }
 
-    // 🔄 ОБНОВЛЕННЫЙ МЕТОД: deleteStagePhoto (использует новый helper)
     async deleteStagePhoto(id: number, stage: 1 | 2 | 3): Promise<Day> {
         const day = await this.dayRepository.findOneBy({ id });
 
@@ -216,10 +188,8 @@ export class DayService {
             return day;
         }
 
-        // 1. Удаляем файл с диска, используя новый helper
         await this.deleteFileFromDiskByUrl(currentUrl);
 
-        // 2. Очищаем URL в базе данных
         (day[photoUrlKey] as string | null) = null;
 
         return this.dayRepository.save(day);

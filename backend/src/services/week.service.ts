@@ -4,15 +4,12 @@ import { Repository } from 'typeorm';
 import { Week } from '../entities/week.entity';
 import { CreateWeekDto } from '../dto/create-week.dto';
 import { Day } from "../entities/day.entity";
-import {DayService} from "../services/day.service";
 
 @Injectable()
 export class WeekService {
     constructor(
         @InjectRepository(Week)
-        private weekRepository: Repository<Week>,
-        @InjectRepository(Day)
-        private dayRepository: Repository<Day>,
+        private weekRepository: Repository<Week>
     ) {}
 
     async create(createWeekDto: CreateWeekDto): Promise<Week> {

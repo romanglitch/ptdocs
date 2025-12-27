@@ -6,9 +6,9 @@ import {
     Param,
     Put,
     Delete,
-    UseInterceptors,
-    UploadedFile,
-    BadRequestException, Query, ParseIntPipe, Patch
+    Query,
+    ParseIntPipe,
+    Patch
 } from '@nestjs/common';
 import { PlantService } from '../services/plant.service';
 import { CreatePlantDto } from '../dto/create-plant.dto';

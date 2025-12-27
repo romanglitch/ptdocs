@@ -6,7 +6,6 @@ import {CreateDocDto} from "../dto/create-doc.dto";
 import path from "path";
 import sharp from "sharp";
 import fs from "fs/promises";
-import {Tag} from "../entities/tag.entity";
 
 @Injectable()
 export class DocService {
@@ -26,30 +25,25 @@ export class DocService {
         try {
             const originalPath = file.path; // 'uploads/docs/randomname.jpg'
 
-            // 1. Формируем новое имя файла (заменяем .jpg/.png на .webp)
             const baseFilename = path.basename(
                 originalPath,
                 path.extname(originalPath),
             );
             const newWebPPath = path.join(file.destination, `${baseFilename}.webp`);
 
-            // 2. Обработка с помощью sharp
             await sharp(originalPath)
-                .webp({ quality: 80 }) // Сжатие и конвертация в WebP с качеством 80
+                .webp({ quality: 80 })
                 .toFile(newWebPPath);
 
-            // 3. Удаляем оригинальный файл (.jpg/.png)
             await fs.unlink(originalPath);
 
-            // 4. Возвращаем URL для нового .webp файла
             return `/uploads/docs/${path.basename(newWebPPath)}`;
 
         } catch (error) {
-            // Если что-то пошло не так, удаляем оригинал, чтобы не мусорить
             try {
                 await fs.unlink(file.path);
             } catch (e) {
-                // Игнорируем ошибку, если файл уже удален
+                //
             }
             throw new InternalServerErrorException(
                 `Ошибка обработки файла ${file.originalname}: ${error.message}`,
@@ -69,10 +63,8 @@ export class DocService {
             await fs.unlink(filePath);
 
         } catch (error) {
-            // Игнорируем ошибку 'файл не найден' (ENOENT)
             if (error.code !== 'ENOENT') {
                 console.error(`Ошибка при удалении старого файла ${fileUrl}:`, error);
-                // Можно проигнорировать, чтобы не блокировать загрузку нового фото
             }
         }
     }
