@@ -5,7 +5,6 @@ import EditorJS, {OutputData} from '@editorjs/editorjs';
 import Header from '@/components/docs-editor-header';
 import List from '@editorjs/list';
 import ImageTool from '@editorjs/image';
-import {putDocs} from "@/lib/api";
 
 interface EditorProps {
 	data?: OutputData;
@@ -15,7 +14,7 @@ interface EditorProps {
 	docId?:number;
 }
 
-export default function Editor({ data, onChange, readOnly, editorId = 'editorjs', docId }: EditorProps) {
+export default function Editor({ data, onChange, readOnly, editorId = 'editorjs' }: EditorProps) {
 	const editorRef = useRef<EditorJS | null>(null);
 
 	useEffect(() => {
