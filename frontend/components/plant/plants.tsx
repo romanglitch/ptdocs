@@ -117,7 +117,7 @@ export default function Plants() {
 												<h2 className={'text-xl'}>{plant.name}</h2>
 												{plant.archive ? (<small>(архив)</small>) : ''}
 											</div>
-											<p className={'text-default-500 text-sm'}>{formatDays(allDays.length)} <b>({formatDays(allDays.length, true)})</b></p>
+											<p className={'text-default-500 text-sm'}>{allDays.length > 6 ? formatDays(allDays.length) : ''} <b>({formatDays(allDays.length, true)})</b></p>
 										</CardHeader>
 										<CardBody>
 											{lastDayPhotoUrl ? (
