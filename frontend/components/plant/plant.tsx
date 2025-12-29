@@ -109,8 +109,6 @@ export default function Plant() {
 	const lastDay = lastWeek?.days[lastWeek.days.length - 1]
 	const allDaysPhotos = allDays.filter((day: any) => day.stage1PhotoUrl);
 
-	console.log(startIndex)
-
 	return (
 		<div className="plant w-full">
 			{!plant ? (

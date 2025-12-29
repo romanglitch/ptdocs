@@ -131,13 +131,17 @@
 }
 
 .plant-header {
-    top: calc(var(--spacing) * 3);
+    top: calc(var(--spacing) * 3 + 3px);
     left: calc(var(--spacing) * 6);
     right: unset;
     z-index: 50;
     border: none;
-    padding: 4px 14px;
     margin-left: 47px;
+    padding: 5px 4px;
+}
+
+.plant-header__days {
+    margin-top: -1px;
 }
 
 /*.ptdocs-header:hover ~ main .plant-header,*/
@@ -161,6 +165,19 @@
     padding-top: 1rem !important;
 }
 
+.plant-header__heading h1 {
+    line-height: normal;
+}
+
+.f-panzoom__content {
+    border-radius: var(--heroui-radius-large);
+}
+
+.f-carousel__toolbar__column {
+    border-radius: var(--heroui-radius-large);
+    overflow: hidden;
+}
+
 @keyframes createdDayAnimation {
     from {
         transform: scale(0.5);
@@ -181,7 +198,19 @@
     }
 }
 
-@media (max-width: 768px) {
+@media (min-width: 1024px) {
+    .day-card-date button {
+        display: none;
+    }
+
+    .day-card-date {
+        width: auto;
+        min-width: 100px;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 1024px) {
     .plant-footer button {
         width: 32px;
         height: 32px;
@@ -235,7 +264,7 @@
     }
 
     .plant-days .embla__slide img {
-        height: 110vw !important;
+        height: 125vw !important;
     }
 
     .plant-footer > div:first-child {
@@ -308,7 +337,7 @@
     }
 
     .plant {
-        padding-top: 6rem;
+        padding-top: 4rem;
     }
 
     .plant-header h1 span {
@@ -323,6 +352,25 @@
 
     .plant-header h1 + p {
         font-size: .76rem;
+    }
+
+    .plant-header {
+        padding: 0.5rem 1rem;
+    }
+
+    .plant-header__days > p:first-child {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: .3rem;
+    }
+
+    .f-button.is-arrow.is-prev, .f-button.is-arrow.is-next {
+        display: none;
+    }
+
+    #docs-link {
+        display: none;
     }
 }
 
