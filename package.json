@@ -14,6 +14,7 @@
   "author": "",
   "scripts": {
     "app:update": "git pull && docker compose down && docker compose build --no-cache && docker builder prune -f && docker compose up -d",
+    "docker:run": "docker compose up --build -d",
     "docker:build": "docker compose build --no-cache",
     "docker:up": "docker compose up -d",
     "docker:down": "docker compose down",
