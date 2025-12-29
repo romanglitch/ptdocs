@@ -27,8 +27,7 @@ export const PlantHeader = (props: any) => {
 				</div>
 				<Divider orientation={'vertical'} style={{height: '2.5rem'}}/>
 				<div className={'plant-header__days'}>
-					<p className={'text-md'}>{formatDays(props.allDays.length)}
-						<span>({formatDays(props.allDays.length, true)})</span></p>
+					<p className={'text-md'}>{formatDays(props.allDays.length)} <span>({formatDays(props.allDays.length, false, true)})</span></p>
 					<p className={'text-xs'}>{dayDate(props.plant.startDate, 0)} / {new Date(props.plant.startDate).getFullYear()}</p>
 				</div>
 			</a>
