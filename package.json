@@ -13,6 +13,7 @@
   "license": "ISC",
   "author": "",
   "scripts": {
+    "update:app": "git pull && docker compose down && docker compose build --no-cache && docker builder prune -f && docker compose up -d",
     "docker:build": "docker compose build --no-cache",
     "docker:up": "docker compose up -d",
     "docker:down": "docker compose down",
