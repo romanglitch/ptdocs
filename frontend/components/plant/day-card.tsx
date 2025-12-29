@@ -44,62 +44,60 @@ export const DayCard = (props: any) => {
 			<div className={'day-card__content flex flex-col gap-3 justify-between items-center p-3 pointer-events-none'}>
 				<div className={`day-card-date pointer-events-auto w-full flex justify-between items-center pt-1 h-10 pb-1 pl-2 pr-2 text-xl ${dayPhoto ? 'text-white' : 'text-inherit'} cursor-default ${dayCardClasses}`}>
 					<small className={'text-md'}>{dayDate(props.startDate, indexOfWeeks)}</small>
-					<div>
-						{dayPhoto ? (
-							<Dropdown>
-								<DropdownTrigger>
+					{dayPhoto ? (
+						<Dropdown>
+							<DropdownTrigger>
 								<Button
-										className={`flex items-center gap-1 items-center justify-center ${dayPhoto ? 'text-white' : 'text-inherit'}`}
-										style={{width: '28px', height: '28px', minWidth: '28px'}} isIconOnly={true}
-										isLoading={dayPhotoLoading}
-										variant={'light'}
-									>
-										<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-											 strokeWidth={1.5}
-											 stroke="currentColor" className="size-6">
-											<path strokeLinecap="round" strokeLinejoin="round"
-												  d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z"/>
-											<path strokeLinecap="round" strokeLinejoin="round"
-												  d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z"/>
-										</svg>
-									</Button>
-								</DropdownTrigger>
-								<DropdownMenu>
-									<DropdownItem key="delete-photo" onPress={() => {
-										deleteDayPhoto(props.day.id).then(() => {
-											setDayPhoto(null)
-										}).catch((err) => {
-											console.log(err)
-										})
-									}}>Удалить фото</DropdownItem>
-									<DropdownItem key="upload-photo" onPress={() => {
-										const fileInput = document.getElementsByName(`input-file-day-${props.day.id}`)[0] as HTMLInputElement;
-										fileInput.click();
-									}}>Загрузить фото</DropdownItem>
-								</DropdownMenu>
-							</Dropdown>
-						) : (
-							<Button
-								className={`flex items-center gap-1 items-center justify-center ${dayPhoto ? 'text-white' : 'text-inherit'}`}
-								style={{width: '28px', height: '28px', minWidth: '28px'}} isIconOnly={true}
-								isLoading={dayPhotoLoading}
-								variant={'light'}
-								onPress={() => {
+									className={`day-card__upload-photo flex items-center gap-1 items-center justify-center ${dayPhoto ? 'text-white' : 'text-inherit'}`}
+									style={{width: '28px', height: '28px', minWidth: '28px'}} isIconOnly={true}
+									isLoading={dayPhotoLoading}
+									variant={'light'}
+								>
+									<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+										 strokeWidth={1.5}
+										 stroke="currentColor" className="size-6">
+										<path strokeLinecap="round" strokeLinejoin="round"
+											  d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z"/>
+										<path strokeLinecap="round" strokeLinejoin="round"
+											  d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z"/>
+									</svg>
+								</Button>
+							</DropdownTrigger>
+							<DropdownMenu>
+								<DropdownItem key="delete-photo" onPress={() => {
+									deleteDayPhoto(props.day.id).then(() => {
+										setDayPhoto(null)
+									}).catch((err) => {
+										console.log(err)
+									})
+								}}>Удалить фото</DropdownItem>
+								<DropdownItem key="upload-photo" onPress={() => {
 									const fileInput = document.getElementsByName(`input-file-day-${props.day.id}`)[0] as HTMLInputElement;
 									fileInput.click();
-								}}
-							>
-								<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-									 strokeWidth={1.5}
-									 stroke="currentColor" className="size-6">
-									<path strokeLinecap="round" strokeLinejoin="round"
-										  d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z"/>
-									<path strokeLinecap="round" strokeLinejoin="round"
-										  d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z"/>
-								</svg>
-							</Button>
-						)}
-					</div>
+								}}>Загрузить фото</DropdownItem>
+							</DropdownMenu>
+						</Dropdown>
+					) : (
+						<Button
+							className={`flex items-center gap-1 items-center justify-center ${dayPhoto ? 'text-white' : 'text-inherit'}`}
+							style={{width: '28px', height: '28px', minWidth: '28px'}} isIconOnly={true}
+							isLoading={dayPhotoLoading}
+							variant={'light'}
+							onPress={() => {
+								const fileInput = document.getElementsByName(`input-file-day-${props.day.id}`)[0] as HTMLInputElement;
+								fileInput.click();
+							}}
+						>
+							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+								 strokeWidth={1.5}
+								 stroke="currentColor" className="size-6">
+								<path strokeLinecap="round" strokeLinejoin="round"
+									  d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z"/>
+								<path strokeLinecap="round" strokeLinejoin="round"
+									  d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z"/>
+							</svg>
+						</Button>
+					)}
 				</div>
 				<Dropdown onClose={() => {
 					putDay(props.day.id, {

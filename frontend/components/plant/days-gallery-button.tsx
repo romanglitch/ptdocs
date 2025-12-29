@@ -40,6 +40,9 @@ export default function DaysGalleryButton({
 			}),
 			{
 				startIndex: startIndex,
+				Carousel: {
+					infinite: false,
+				}
 			}
 		);
 
