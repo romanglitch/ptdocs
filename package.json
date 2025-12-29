@@ -11,7 +11,7 @@
     "url": "git+https://github.com/romanglitch/ptdocs.git"
   },
   "license": "ISC",
-  "author": "",
+  "author": "Roman Glitch",
   "scripts": {
     "app:start": "docker compose up --build -d",
     "app:update": "git pull && docker compose down && docker compose build --no-cache && docker builder prune -f && docker compose up -d",
