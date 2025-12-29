@@ -1,14 +1,17 @@
 # PTdocs
-- .env - prod envrimoment
-- /backend/.env - dev envrimoment
 
-#### DEV
+#### Production:
+```
+npm run app:start
+npm run app:update
+```
+- .env - prod envrimoment
+
+---
+
+#### Development:
 ```
 npm run dev:frontend
 npm run dev:backend
 ```
-
-#### PROD
-```
-npm run app:start
-npm run app:update
+- /backend/.env - dev envrimoment
