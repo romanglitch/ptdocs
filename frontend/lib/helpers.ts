@@ -34,7 +34,7 @@ export const formatDays = (days: number, onlyDays = false, onlyWeeks = false) =>
 		}
 
 		if (remainingDays > 0) {
-			result.push(`${remainingDays} ${declension(remainingDays, 'день', 'дня', 'дней')}`);
+			result.push(`${weeks > 0 ? 'и' : ''} ${remainingDays} ${declension(remainingDays, 'день', 'дня', 'дней')}`);
 		}
 
 		return result.join(' ');
@@ -48,15 +48,15 @@ export const formatDays = (days: number, onlyDays = false, onlyWeeks = false) =>
 	const result = [];
 
 	if (months > 0) {
-		result.push(`${months} ${declension(months, 'месяц', 'месяца', 'месяцев')}`);
+		result.push(`${months} ${declension(months, 'месяц', 'месяца', 'месяцев')} ${weeks || remainingDays > 0 ? 'и' : ''}`);
 	}
 
 	if (weeks > 0) {
-		result.push(`${weeks} ${declension(weeks, 'неделя', 'недели', 'недель')}`);
+		result.push(`${months > 0 ? 'и' : ''} ${weeks} ${declension(weeks, 'неделя', 'недели', 'недель')}`);
 	}
 
 	if (remainingDays > 0) {
-		result.push(`${remainingDays} ${declension(remainingDays, 'день', 'дня', 'дней')}`);
+		result.push(`${weeks > 0 ? 'и' : ''} ${remainingDays} ${declension(remainingDays, 'день', 'дня', 'дней')}`);
 	}
 
 	return result.join(' ');
