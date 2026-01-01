@@ -52,7 +52,7 @@ export const formatDays = (days: number, onlyDays = false, onlyWeeks = false) =>
 	}
 
 	if (weeks > 0) {
-		result.push(`${months > 0 ? 'и' : ''} ${weeks} ${declension(weeks, 'неделя', 'недели', 'недель')}`);
+		result.push(`${weeks} ${declension(weeks, 'неделя', 'недели', 'недель')}`);
 	}
 
 	if (remainingDays > 0) {
