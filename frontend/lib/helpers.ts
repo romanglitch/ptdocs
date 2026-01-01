@@ -48,7 +48,7 @@ export const formatDays = (days: number, onlyDays = false, onlyWeeks = false) =>
 	const result = [];
 
 	if (months > 0) {
-		result.push(`${months} ${declension(months, 'месяц', 'месяца', 'месяцев')} ${weeks || remainingDays > 0 ? 'и' : ''}`);
+		result.push(`${months} ${declension(months, 'месяц', 'месяца', 'месяцев')}`);
 	}
 
 	if (weeks > 0) {
